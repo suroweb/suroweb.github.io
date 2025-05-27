@@ -85,4 +85,52 @@ document.addEventListener("DOMContentLoaded", () => {
       confirmationModal.classList.remove("active");
     }
   });
+
+  // Handle project card clicks
+  const imageModal = document.getElementById("image-modal");
+  const modalImage = document.getElementById("modal-image");
+  const closeButtons = document.querySelectorAll(".close-modal");
+
+  // Project card clicks - opens the image modal
+  projectCards.forEach((card) => {
+    card.addEventListener("click", function () {
+      const imgSrc = this.querySelector("img").src;
+      const imgAlt = this.querySelector("img").alt;
+      
+      modalImage.src = imgSrc;
+      modalImage.alt = imgAlt;
+      
+      // Modal mit Animation anzeigen
+      imageModal.style.display = "flex";
+      // Small timeout to ensure display:flex is applied before the animation starts
+      requestAnimationFrame(() => {
+        imageModal.classList.add("active");
+      });
+    });
+  });
+
+  // Modal close functionality
+  closeButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const modal = this.closest(".modal");
+      modal.classList.remove("active");
+      setTimeout(() => {
+        if (!modal.classList.contains("active")) {
+          modal.style.display = "none";
+        }
+      }, 300); // Match the CSS transition duration
+    });
+  });
+
+  // Close modals when clicking outside of them
+  window.addEventListener("click", function (event) {
+    if (event.target.classList.contains("modal")) {
+      event.target.classList.remove("active");
+      setTimeout(() => {
+        if (!event.target.classList.contains("active")) {
+          event.target.style.display = "none";
+        }
+      }, 300);
+    }
+  });
 });
