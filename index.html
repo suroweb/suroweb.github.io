@@ -1,11 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suroweb Portfolio by Danco Milosevici</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Personal portfolio of a web developer showcasing projects, skills, and contact information." />
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container" style="display: flex; justify-content: center; align-items: center;"><span>Under Construction</span></div>
+    <header class="header">
+        <div class="logo">Portfolio</div>
+        <button id="menu-toggle" aria-label="Toggle menu">☰</button>
+        <nav role="navigation" class="main-nav">
+            <ul>
+                <li><a href="#about-me">About Me</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Hello, I'm a <span class="highlight">Developer</span></h1>
+            <p class="hero-subtitle">I design and develop modern web solutions with a focus on user experience</p>
+            <a href="#contact" class="cta-button">Get in Touch</a>
+        </div>
+    </section>
+
+    <main>
+        <section id="about-me" class="section">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>I am a passionate developer who enjoys creating intuitive and dynamic web applications. I thrive on learning new technologies and building solutions that make an impact.</p>
+                        <p>With a background in modern web technologies, I craft projects that not only look good but function exceptionally well.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section bg-light">
+            <div class="container">
+                <h2 class="section-title">Projects</h2>
+                <div class="project-filter">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="web">Web</button>
+                    <button class="filter-btn" data-filter="api">API</button>
+                </div>
+                <div class="projects-grid">
+                    <article class="project-card" data-category="web">
+                        <div class="project-image">
+                            <img src="assets/todolistapp.png" alt="A tablet displaying a to-do list app with tasks like 'Buy groceries' and 'Call Alice' on a light wooden surface." />
+                            <div class="project-links">
+                                <a href="#" class="project-link">Live Demo</a>
+                                <a href="#" class="project-link">Code</a>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>To-Do List App</h3>
+                            <p>A dynamic to-do list with local storage and drag-and-drop functionality.</p>
+                            <div class="project-tech">
+                                <span>HTML5</span>
+                                <span>CSS3</span>
+                                <span>JavaScript</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card" data-category="api">
+                        <div class="project-image">
+                            <img src="assets/weatherdashboard.png" alt="A silver MacBook Pro showing a weather dashboard with a sunny forecast, displaying a temperature, details like humidity and wind speed on a light wooden surface." />
+                            <div class="project-links">
+                                <a href="#" class="project-link">Live Demo</a>
+                                <a href="#" class="project-link">Code</a>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Weather Dashboard</h3>
+                            <p>A weather application that fetches and visualizes data from a public API.</p>
+                            <div class="project-tech">
+                                <span>Vue 3</span>
+                                <span>API</span>
+                                <span>CSS Grid</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section">
+            <div class="container">
+                <h2 class="section-title">Skills</h2>
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h3>Frontend</h3>
+                        <div class="skills-list">
+                            <div class="skill-tag">HTML5</div>
+                            <div class="skill-tag">CSS3</div>
+                            <div class="skill-tag">JavaScript (ES6+)</div>
+                            <div class="skill-tag">Vue 3</div>
+                            <div class="skill-tag">Responsive Design</div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Backend & Tools</h3>
+                        <div class="skills-list">
+                            <div class="skill-tag">Node.js</div>
+                            <div class="skill-tag">Git & GitHub</div>
+                            <div class="skill-tag">RESTful APIs</div>
+                            <div class="skill-tag">MongoDB</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section bg-light">
+            <div class="container">
+                <h2 class="section-title">Contact</h2>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h3>Let's Work Together</h3>
+                        <p>Have a project in mind? Send me a message and I'll get back to you.</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    
+                    <form class="contact-form" action="submit-form.php" method="post">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 My Portfolio</p>
+            <a href="#" class="back-to-top">Back to Top ↑</a>
+        </div>
+    </footer>
+
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-icon">✓</div>
+            <h3>Message Sent!</h3>
+            <p>Thank you for reaching out. I'll get back to you as soon as possible.</p>
+            <button class="modal-btn">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
