@@ -250,21 +250,99 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Contact Form Submission
+  // Contact Form Validation and Submission
   const contactForm = document.querySelector(".contact-form");
   const confirmationModal = document.getElementById("confirmation-modal");
   const closeModal = document.querySelector(".close-modal");
   const modalBtn = document.querySelector(".modal-btn");
+  const formInputs = contactForm?.querySelectorAll("input, textarea");
+
+  // Real-time validation
+  formInputs?.forEach((input) => {
+    input.addEventListener("blur", () => validateField(input));
+    input.addEventListener("input", () => {
+      if (input.classList.contains("error")) {
+        validateField(input);
+      }
+    });
+  });
+
+  function validateField(field) {
+    const value = field.value.trim();
+    let isValid = true;
+    let errorMessage = "";
+
+    // Remove existing error
+    field.classList.remove("error");
+    const existingError = field.parentElement.querySelector(".error-message");
+    if (existingError) existingError.remove();
+
+    // Validation rules
+    if (field.hasAttribute("required") && !value) {
+      isValid = false;
+      errorMessage = "This field is required";
+    } else if (field.type === "email" && value) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(value)) {
+        isValid = false;
+        errorMessage = "Please enter a valid email address";
+      }
+    } else if (field.name === "name" && value.length < 2) {
+      isValid = false;
+      errorMessage = "Name must be at least 2 characters";
+    } else if (field.name === "message" && value.length < 10) {
+      isValid = false;
+      errorMessage = "Message must be at least 10 characters";
+    }
+
+    if (!isValid) {
+      field.classList.add("error");
+      const error = document.createElement("span");
+      error.className = "error-message";
+      error.textContent = errorMessage;
+      field.parentElement.appendChild(error);
+    }
+
+    return isValid;
+  }
+
+  function validateForm() {
+    let isValid = true;
+    formInputs.forEach((input) => {
+      if (!validateField(input)) {
+        isValid = false;
+      }
+    });
+    return isValid;
+  }
 
   if (contactForm) {
     contactForm.addEventListener("submit", function (e) {
-      e.preventDefault(); // Prevent actual form submission for demo
+      e.preventDefault();
 
-      // Show confirmation modal
-      confirmationModal.classList.add("active");
+      if (!validateForm()) {
+        // Shake form if invalid
+        contactForm.classList.add("shake");
+        setTimeout(() => contactForm.classList.remove("shake"), 500);
+        return;
+      }
 
-      // Reset form fields
-      contactForm.reset();
+      // Simulate sending (in real scenario, use EmailJS or backend)
+      const submitBtn = contactForm.querySelector(".submit-btn");
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = "Sending...";
+      submitBtn.disabled = true;
+
+      // Simulate API call
+      setTimeout(() => {
+        // Show confirmation modal
+        confirmationModal.classList.add("active");
+
+        // Reset form
+        contactForm.reset();
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }, 1500);
     });
   }
 
