@@ -1,4 +1,206 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Dark Mode Toggle
+  const themeToggle = document.getElementById("theme-toggle");
+  const html = document.documentElement;
+  const themeIcon = themeToggle.querySelector("i");
+
+  // Check for saved theme preference or default to light mode
+  const currentTheme = localStorage.getItem("theme") || "light";
+  html.setAttribute("data-theme", currentTheme);
+  updateThemeIcon(currentTheme);
+
+  themeToggle.addEventListener("click", () => {
+    const currentTheme = html.getAttribute("data-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+    html.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+    updateThemeIcon(newTheme);
+  });
+
+  function updateThemeIcon(theme) {
+    if (theme === "dark") {
+      themeIcon.classList.remove("fa-moon");
+      themeIcon.classList.add("fa-sun");
+    } else {
+      themeIcon.classList.remove("fa-sun");
+      themeIcon.classList.add("fa-moon");
+    }
+  }
+
+  // Scroll Progress Bar
+  const scrollProgress = document.getElementById("scroll-progress");
+
+  window.addEventListener("scroll", () => {
+    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (window.scrollY / windowHeight) * 100;
+    scrollProgress.style.width = scrolled + "%";
+  });
+
+  // Header Scroll Effect
+  const header = document.querySelector(".header");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  });
+
+  // Active Section Highlighting
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".main-nav a");
+
+  window.addEventListener("scroll", () => {
+    let current = "";
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (window.scrollY >= sectionTop - 200) {
+        current = section.getAttribute("id");
+      }
+    });
+
+    navLinks.forEach((link) => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === `#${current}`) {
+        link.classList.add("active");
+      }
+    });
+  });
+
+  // Reveal on Scroll
+  const revealElements = document.querySelectorAll(".reveal");
+
+  const revealOnScroll = () => {
+    revealElements.forEach((element) => {
+      const elementTop = element.getBoundingClientRect().top;
+      const elementVisible = 150;
+
+      if (elementTop < window.innerHeight - elementVisible) {
+        element.classList.add("active");
+      }
+    });
+  };
+
+  window.addEventListener("scroll", revealOnScroll);
+  revealOnScroll(); // Initial check
+
+  // Animated Counter for Stats
+  const statNumbers = document.querySelectorAll(".stat-number");
+  let hasCountedStats = false;
+
+  const animateStats = () => {
+    if (hasCountedStats) return;
+
+    const statsSection = document.querySelector(".stats-section");
+    if (!statsSection) return;
+
+    const sectionTop = statsSection.getBoundingClientRect().top;
+    const triggerPoint = window.innerHeight * 0.75;
+
+    if (sectionTop < triggerPoint) {
+      hasCountedStats = true;
+
+      statNumbers.forEach((stat) => {
+        const target = parseInt(stat.getAttribute("data-target"));
+        const duration = 2000;
+        const increment = target / (duration / 16);
+        let current = 0;
+
+        const updateCounter = () => {
+          current += increment;
+          if (current < target) {
+            stat.textContent = Math.floor(current);
+            requestAnimationFrame(updateCounter);
+          } else {
+            stat.textContent = target;
+          }
+        };
+
+        updateCounter();
+      });
+    }
+  };
+
+  window.addEventListener("scroll", animateStats);
+  animateStats(); // Initial check
+
+  // Animate Skill Bars
+  const skillBars = document.querySelectorAll(".skill-progress");
+  let hasAnimatedSkills = false;
+
+  const animateSkills = () => {
+    if (hasAnimatedSkills) return;
+
+    const skillsSection = document.getElementById("skills");
+    if (!skillsSection) return;
+
+    const sectionTop = skillsSection.getBoundingClientRect().top;
+    const triggerPoint = window.innerHeight * 0.75;
+
+    if (sectionTop < triggerPoint) {
+      hasAnimatedSkills = true;
+
+      skillBars.forEach((bar) => {
+        const progress = bar.getAttribute("data-progress");
+        setTimeout(() => {
+          bar.style.width = progress + "%";
+        }, 100);
+      });
+    }
+  };
+
+  window.addEventListener("scroll", animateSkills);
+  animateSkills(); // Initial check
+
+  // Typewriter Effect
+  const typewriterElement = document.getElementById("typewriter");
+  const words = ["Developer", "Designer", "Creator", "Problem Solver"];
+  let wordIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  let typeSpeed = 150;
+
+  function typeWriter() {
+    const currentWord = words[wordIndex];
+
+    if (isDeleting) {
+      typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
+      charIndex--;
+      typeSpeed = 50;
+    } else {
+      typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
+      charIndex++;
+      typeSpeed = 150;
+    }
+
+    if (!isDeleting && charIndex === currentWord.length) {
+      // Pause at end of word
+      typeSpeed = 2000;
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      wordIndex = (wordIndex + 1) % words.length;
+      typeSpeed = 500;
+    }
+
+    setTimeout(typeWriter, typeSpeed);
+  }
+
+  // Start typewriter effect after a short delay
+  setTimeout(typeWriter, 1000);
+
+  // Scroll indicator smooth scroll
+  const scrollIndicator = document.querySelector(".scroll-indicator");
+  if (scrollIndicator) {
+    scrollIndicator.addEventListener("click", () => {
+      const aboutSection = document.getElementById("about-me");
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+    });
+  }
+
   // Mobile Menu Toggle
   const menuToggle = document.getElementById("menu-toggle");
   const mainNav = document.querySelector(".main-nav");
